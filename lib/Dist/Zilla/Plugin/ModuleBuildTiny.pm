@@ -11,7 +11,7 @@ has version => (
 	default => '0.006',
 );
 
-my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL(\@ARGV);\n";
+my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
 
 sub register_prereqs {
 	my ($self) = @_;
