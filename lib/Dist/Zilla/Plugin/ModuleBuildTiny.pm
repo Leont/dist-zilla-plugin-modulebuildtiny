@@ -36,3 +36,18 @@ no Moose;
 1;
 
 # ABSTRACT: Build a Build.PL that uses Module::Build::Tiny
+
+__END__
+
+=head1 DESCRIPTION
+
+This plugin will create a F<Build.PL> for installing the dist using L<Module::Build::Tiny>.
+
+=cut
+
+=attr version
+
+B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
+
+Defaults to 0.006
+
