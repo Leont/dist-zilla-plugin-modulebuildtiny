@@ -51,3 +51,6 @@ B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
 
 Defaults to 0.006
 
+=for Pod::Coverage
+.
+=end
