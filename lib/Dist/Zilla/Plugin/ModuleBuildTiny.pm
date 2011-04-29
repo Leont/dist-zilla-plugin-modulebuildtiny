@@ -1,7 +1,7 @@
 package Dist::Zilla::Plugin::ModuleBuildTiny;
 
 use Moose;
-with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate/;
+with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::Role::PrereqSource/;
 
 use Dist::Zilla::File::InMemory;
 
