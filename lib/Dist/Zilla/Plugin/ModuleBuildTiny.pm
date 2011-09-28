@@ -2,13 +2,16 @@ package Dist::Zilla::Plugin::ModuleBuildTiny;
 
 use Moose;
 with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::Role::PrereqSource/;
+use Module::Metadata;
 
 use Dist::Zilla::File::InMemory;
 
 has version => (
 	isa => 'Str',
 	is  => 'rw',
-	default => '0.007',
+	default => sub {
+		return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
+	},
 );
 
 my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
@@ -49,7 +52,7 @@ This plugin will create a F<Build.PL> for installing the dist using L<Module::Bu
 
 B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
 
-Defaults to 0.007
+Defaults to the version installed on the author's perl installation
 
 =for Pod::Coverage
 .

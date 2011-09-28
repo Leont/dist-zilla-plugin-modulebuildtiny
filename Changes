@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Require the author's version of Module::Build::Tiny by default.
 
 0.002     2011-05-02 09:18:37 Europe/Bucharest
           Increase default minimal version of Module::Build::Tiny to 0.007 to avoid configure time issues
