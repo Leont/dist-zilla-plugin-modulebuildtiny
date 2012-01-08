@@ -6,12 +6,16 @@ use Module::Metadata;
 
 use Dist::Zilla::File::InMemory;
 
+use version;
+use MooseX::Types::Perl qw(VersionObject);
+
 has version => (
-	isa => 'Str',
 	is  => 'rw',
+	isa => VersionObject,
 	default => sub {
-		return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
+		return Module::Metadata->new_from_module('Module::Build::Tiny')->version;
 	},
+	coerce => 1,
 );
 
 my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
