@@ -44,8 +44,6 @@ no Moose;
 
 # ABSTRACT: Build a Build.PL that uses Module::Build::Tiny
 
-__END__
-
 =head1 DESCRIPTION
 
 This plugin will create a F<Build.PL> for installing the dist using L<Module::Build::Tiny>.
@@ -58,6 +56,3 @@ B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
 
 Defaults to the version installed on the author's perl installation
 
-=for Pod::Coverage
-.
-=end
