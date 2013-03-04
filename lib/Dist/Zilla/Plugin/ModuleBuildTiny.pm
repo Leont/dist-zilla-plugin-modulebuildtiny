@@ -10,7 +10,7 @@ use version;
 use MooseX::Types::Perl qw(VersionObject);
 
 has version => (
-	is  => 'rw',
+	is  => 'ro',
 	isa => VersionObject,
 	default => sub {
 		return Module::Metadata->new_from_module('Module::Build::Tiny')->version;
