@@ -2,20 +2,17 @@ package Dist::Zilla::Plugin::ModuleBuildTiny;
 
 use Moose;
 with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::Role::PrereqSource/;
-use Module::Metadata;
 
 use Dist::Zilla::File::InMemory;
-
-use version;
-use MooseX::Types::Perl qw(VersionObject);
+use Module::Metadata;
+use MooseX::Types::Moose qw/Str/;
 
 has version => (
-	is  => 'ro',
-	isa => VersionObject,
+	is      => 'ro',
+	isa     => Str,
 	default => sub {
-		return Module::Metadata->new_from_module('Module::Build::Tiny')->version;
+		return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
 	},
-	coerce => 1,
 );
 
 my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
