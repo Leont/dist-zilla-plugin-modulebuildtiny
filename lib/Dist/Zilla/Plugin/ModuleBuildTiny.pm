@@ -15,7 +15,17 @@ has version => (
 	},
 );
 
-my $template = "use Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
+has minimum_perl => (
+	is      => 'ro',
+	isa     => Str,
+	lazy    => 1,
+	default => sub {
+		my $self = shift;
+		return $self->zilla->prereqs->requirements_for('runtime', 'requires')->requirements_for_module('perl') || '5.006'
+	},
+);
+
+my $template = "use {{ \$minimum_perl }};\nuse Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
 
 sub register_prereqs {
 	my ($self) = @_;
@@ -28,7 +38,7 @@ sub register_prereqs {
 sub setup_installer {
 	my ($self, $arg) = @_;
 
-	my $content = $self->fill_in_string($template, { version => $self->version });
+	my $content = $self->fill_in_string($template, { version => $self->version, minimum_perl => $self->minimum_perl });
 	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
 	$self->add_file($file);
 
@@ -53,3 +63,8 @@ B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
 
 Defaults to the version installed on the author's perl installation
 
+=attr minimum_perl
+
+B<Optional:> Specify the minimum version of perl to require in the F<Build.PL>.
+
+This is normally taken from dzils prereq metadata.
