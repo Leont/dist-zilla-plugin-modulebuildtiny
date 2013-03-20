@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.004     2013-03-20 15:00:32 Europe/Amsterdam
           Add «use $minimum_perl;» statement to Build.PL and minimum_perl attribute to plugin
 
 0.003     2013-03-04 14:10:35 Europe/Amsterdam
