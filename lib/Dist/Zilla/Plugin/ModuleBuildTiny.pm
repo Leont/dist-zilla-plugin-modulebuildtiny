@@ -42,7 +42,10 @@ sub register_prereqs {
 sub setup_installer {
 	my ($self, $arg) = @_;
 
-	my $content = $self->fill_in_string($template, { version => $self->version, minimum_perl => $self->minimum_perl });
+	my $content = $self->fill_in_string($template, {
+            version => $self->version,
+            minimum_perl => $self->minimum_perl
+        });
 	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
 	$self->add_file($file);
 
