@@ -25,7 +25,11 @@ has minimum_perl => (
 	},
 );
 
-my $template = "use {{ \$minimum_perl }};\nuse Module::Build::Tiny {{ \$version }};\nBuild_PL();\n";
+my $template = <<'BUILD_PL';
+use {{ $minimum_perl }};
+use Module::Build::Tiny {{ $version }};
+Build_PL();
+BUILD_PL
 
 sub register_prereqs {
 	my ($self) = @_;
