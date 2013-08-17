@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Prohibit the use of executables from a directory other than script/
 
 0.014     2015-08-22 19:23:20+02:00 Europe/Amsterdam
           Increase minimum MBT in conservative logic
