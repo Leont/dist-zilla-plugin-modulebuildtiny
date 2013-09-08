@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Prohibit dynamic_config
           Depend on author-installed Module::Build::Tiny version
 
 0.004     2013-03-20 15:00:32 Europe/Amsterdam
