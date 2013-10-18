@@ -85,3 +85,5 @@ Defaults to the version installed on the author's perl installation
 B<Optional:> Specify the minimum version of perl to require in the F<Build.PL>.
 
 This is normally taken from dzils prereq metadata.
+
+# vim: set ts=4 sw=4 noet nolist :
