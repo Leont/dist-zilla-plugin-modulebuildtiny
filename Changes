@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Prohibit the use of a sharedir configuration that is not supported
+          (Karen Etheridge)
 
 0.005     2013-09-08 21:41:33 Europe/Amsterdam
           Prohibit dynamic_config

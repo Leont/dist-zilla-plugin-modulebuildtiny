@@ -6,6 +6,7 @@ with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::
 use Dist::Zilla::File::InMemory;
 use Module::Metadata;
 use MooseX::Types::Moose qw/Str/;
+use List::MoreUtils qw/any/;
 
 has version => (
 	is      => 'ro',
@@ -39,6 +40,13 @@ sub setup_installer {
 	my ($self, $arg) = @_;
 
 	confess "Module::Build::Tiny is currently incompatible with dynamic_config" if $self->zilla->distmeta->{dynamic_config};
+
+  $self->log_fatal('unsupported use of a sharedir') if any {
+    my $share_dir_map = $_->share_dir_map;
+    exists $share_dir_map->{module} or
+			(defined $share_dir_map->{dist} and $share_dir_map->{dist} ne 'share')
+  } @{$self->zilla->plugins_with(-ShareDir)};
+
 	my $content = $self->fill_in_string($template, { version => $self->version, minimum_perl => $self->minimum_perl });
 	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
 	$self->add_file($file);
@@ -69,3 +77,5 @@ Defaults to the version installed on the author's perl installation
 B<Optional:> Specify the minimum version of perl to require in the F<Build.PL>.
 
 This is normally taken from dzils prereq metadata.
+
+# vim: set ts=2 sw=2 noet nolist :
