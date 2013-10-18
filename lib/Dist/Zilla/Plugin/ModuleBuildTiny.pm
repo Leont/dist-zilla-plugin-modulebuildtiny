@@ -44,6 +44,12 @@ sub setup_installer {
 	my ($self, $arg) = @_;
 
 	confess "Module::Build::Tiny is currently incompatible with dynamic_config" if $self->zilla->distmeta->{dynamic_config};
+
+	for my $map (map { $_->share_dir_map } @{$self->zilla->plugins_with(-ShareDir)}) {
+		$self->log_fatal('Unsupported use of a module sharedir') if exists $map->{module};
+		$self->log_fatal('Sharedir location must be share/') if defined $map->{dist} and $map->{dist} ne 'share';
+	}
+
 	my $content = $self->fill_in_string($template, {
 			version      => $self->version,
 			minimum_perl => $self->minimum_perl,
