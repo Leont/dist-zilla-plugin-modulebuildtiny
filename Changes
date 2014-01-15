@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Build.PL is now created at the correct phase (gather_files), with
+          final content determined at the normal time (setup_installer)
 
 0.007     2014-09-01 11:25:41+02:00 Europe/Amsterdam
           use strict, warnings in generated Build.PL
