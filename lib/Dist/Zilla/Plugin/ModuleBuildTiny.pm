@@ -1,11 +1,17 @@
 package Dist::Zilla::Plugin::ModuleBuildTiny;
 
 use Moose;
-with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::Role::PrereqSource/;
+with qw/
+	Dist::Zilla::Role::BuildPL
+	Dist::Zilla::Role::TextTemplate
+	Dist::Zilla::Role::PrereqSource
+	Dist::Zilla::Role::FileGatherer
+/;
 
 use Dist::Zilla::File::InMemory;
 use Module::Metadata;
 use MooseX::Types::Moose qw/Str/;
+use List::Util qw/first/;
 
 has version => (
 	is      => 'ro',
@@ -40,6 +46,26 @@ sub register_prereqs {
 	return;
 }
 
+sub gather_files {
+	my ($self) = @_;
+
+	if (my $file = first { $_->name eq 'Build.PL' } @{$self->zilla->files})
+	{
+		# if it's another type, some other plugin added it, so it's better to
+		# error out and let the developer sort out what went wrong.
+		$self->zilla->prune_file($file) if $file->isa('Dist::Zilla::File::OnDisk');
+	}
+
+	require Dist::Zilla::File::InMemory;
+	my $file = Dist::Zilla::File::InMemory->new({
+		name => 'Build.PL',
+		content => '',	# to be filled in via setup_installer
+	});
+
+	$self->add_file($file);
+	return;
+}
+
 sub setup_installer {
 	my ($self, $arg) = @_;
 
@@ -56,8 +82,10 @@ sub setup_installer {
 			dist_name    => $self->zilla->name,
 			plugin_title => ref($self) . ' ' . $self->VERSION,
 		});
-	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
-	$self->add_file($file);
+
+	my $file = first { $_->name eq 'Build.PL' } @{$self->zilla->files};
+	$self->log_debug([ 'updating contents of Build.PL in memory' ]);
+	$file->content($content);
 
 	return;
 }
