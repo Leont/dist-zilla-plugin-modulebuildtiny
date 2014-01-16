@@ -5,11 +5,11 @@ with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::
 
 use Dist::Zilla::File::InMemory;
 use Module::Metadata;
-use MooseX::Types::Moose qw/Str/;
+use MooseX::Types::Perl qw/StrictVersionStr/;
 
 has version => (
 	is      => 'ro',
-	isa     => Str,
+	isa     => StrictVersionStr,
 	default => sub {
 		return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
 	},
@@ -17,7 +17,7 @@ has version => (
 
 has minimum_perl => (
 	is      => 'ro',
-	isa     => Str,
+	isa     => StrictVersionStr,
 	lazy    => 1,
 	default => sub {
 		my $self = shift;
