@@ -54,7 +54,7 @@ sub setup_installer {
 			version      => $self->version,
 			minimum_perl => $self->minimum_perl,
 			dist_name    => $self->zilla->name,
-			plugin_title => ref($self) . ' ' . $self->VERSION,
+			plugin_title => ref($self) . ' ' . ($self->VERSION || '<self>'),
 		});
 	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
 	$self->add_file($file);
