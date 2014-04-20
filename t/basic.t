@@ -35,6 +35,6 @@ is($tzil->built_in->file('Build.PL')->slurp, $expected, 'Build.PL is exactly lik
 
 my $meta = CPAN::Meta->load_file($tzil->built_in->file('META.json'), { lazy_validation => 0 });
 my $configure_requires = $meta->effective_prereqs->requirements_for('configure', 'requires')->as_string_hash;
-is_deeply($configure_requires, { 'Module::Build::Tiny' => '0.030' } );
+is_deeply($configure_requires, { 'Module::Build::Tiny' => '0.030' }, 'configure requires' );
 
 done_testing;
