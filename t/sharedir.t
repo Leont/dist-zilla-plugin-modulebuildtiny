@@ -23,7 +23,7 @@ use Test::DZil;
 	like(
 		exception { $tzil->build },
 		qr/\[ModuleBuildTiny\] Unsupported use of a module sharedir/,
-		'warning issued when there is a module shareidr in use',
+		'warning issued when there is a module sharedir in use',
 	);
 }
 

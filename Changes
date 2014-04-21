@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          use strict, warnings in generated Build.PL
 
 0.006     2014-01-13 00:54:54CET+0100 Europe/Amsterdam
           Prohibit the use of a sharedir configuration that is not supported
