@@ -1,11 +1,16 @@
 package Dist::Zilla::Plugin::ModuleBuildTiny;
 
 use Moose;
-with qw/Dist::Zilla::Role::BuildPL Dist::Zilla::Role::TextTemplate Dist::Zilla::Role::PrereqSource/;
+with qw/
+	Dist::Zilla::Role::BuildPL
+	Dist::Zilla::Role::TextTemplate
+	Dist::Zilla::Role::PrereqSource
+	Dist::Zilla::Role::FileGatherer
+/;
 
-use Dist::Zilla::File::InMemory;
 use Module::Metadata;
 use MooseX::Types::Perl qw/StrictVersionStr/;
+use List::Util qw/first/;
 
 has version => (
 	is      => 'ro',
@@ -43,6 +48,30 @@ sub register_prereqs {
 	return;
 }
 
+sub gather_files {
+	my ($self) = @_;
+
+	if (my $file = first { $_->name eq 'Build.PL' } @{$self->zilla->files})
+	{
+		# if it's another type, some other plugin added it, so it's better to
+		# error out and let the developer sort out what went wrong.
+		if ($file->isa('Dist::Zilla::File::OnDisk'))
+		{
+			$self->log('replacing existing Build.PL found in repository');
+			$self->zilla->prune_file($file);
+		}
+	}
+
+	require Dist::Zilla::File::InMemory;
+	my $file = Dist::Zilla::File::InMemory->new({
+		name => 'Build.PL',
+		content => $template,	# template evaluated later
+	});
+
+	$self->add_file($file);
+	return;
+}
+
 sub setup_installer {
 	my ($self, $arg) = @_;
 
@@ -53,14 +82,18 @@ sub setup_installer {
 		$self->log_fatal('Sharedir location must be share/') if defined $map->{dist} and $map->{dist} ne 'share';
 	}
 
-	my $content = $self->fill_in_string($template, {
+	my $file = first { $_->name eq 'Build.PL' } @{$self->zilla->files};
+	my $content = $file->content;
+
+	$content = $self->fill_in_string($content, {
 			version      => $self->version,
 			minimum_perl => $self->minimum_perl,
 			dist_name    => $self->zilla->name,
 			plugin_title => ref($self) . ' ' . ($self->VERSION || '<self>'),
 		});
-	my $file = Dist::Zilla::File::InMemory->new({ name => 'Build.PL', content => $content });
-	$self->add_file($file);
+
+	$self->log_debug([ 'updating contents of Build.PL in memory' ]);
+	$file->content($content);
 
 	return;
 }
@@ -75,8 +108,6 @@ no Moose;
 
 This plugin will create a F<Build.PL> for installing the dist using L<Module::Build::Tiny>.
 
-=cut
-
 =attr version
 
 B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
@@ -88,5 +119,7 @@ Defaults to the version installed on the author's perl installation
 B<Optional:> Specify the minimum version of perl to require in the F<Build.PL>.
 
 This is normally taken from dzil's prereq metadata.
+
+=cut
 
 # vim: set ts=4 sw=4 noet nolist :
