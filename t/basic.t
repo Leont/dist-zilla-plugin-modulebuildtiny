@@ -42,3 +42,5 @@ my $configure_requires = $meta->effective_prereqs->requirements_for('configure',
 is_deeply($configure_requires, { 'Module::Build::Tiny' => $mbt_version }, 'configure requires' );
 
 done_testing;
+
+# vim: set ts=4 sw=4 noet nolist :
