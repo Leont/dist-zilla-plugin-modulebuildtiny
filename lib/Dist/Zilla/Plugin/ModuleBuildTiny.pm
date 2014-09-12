@@ -51,7 +51,14 @@ has minimum_perl => (
 	lazy    => 1,
 	default => sub {
 		my $self = shift;
-		return $self->zilla->prereqs->requirements_for('runtime', 'requires')->requirements_for_module('perl') || '5.006'
+		my $prereqs = $self->zilla->prereqs;
+		my $perl_prereq = $prereqs->requirements_for(qw(runtime requires))
+			->clone
+			->add_requirements($prereqs->requirements_for(qw(configure requires)))
+			->add_requirements($prereqs->requirements_for(qw(build requires)))
+			->add_requirements($prereqs->requirements_for(qw(test requires)))
+			->as_string_hash->{perl};
+		$perl_prereq || '5.006';
 	},
 );
 
