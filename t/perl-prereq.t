@@ -12,11 +12,9 @@ my $tzil = Builder->from_config(
 	{
 		add_files => {
 			'source/dist.ini' => simple_ini(
-				[ ModuleBuildTiny => {
-						minimum_perl => $],
-					}
-				],
-				'MetaJSON',
+				[ ModuleBuildTiny => ],
+				[ Prereqs => 'RuntimeRequires' => { perl => '5.008' } ],
+				[ Prereqs => 'BuildRequires' => { perl => '5.010' } ],
 			),
 		},
 	},
@@ -30,17 +28,12 @@ my $expected = <<"END";
 use strict;
 use warnings;
 
-use $];
+use 5.010;
 use Module::Build::Tiny $mbt_version;
 Build_PL();
 END
 
-is($tzil->built_in->file('Build.PL')->slurp, $expected, 'Build.PL is exactly like expected');
-
-my $meta = CPAN::Meta->load_file($tzil->built_in->file('META.json'), { lazy_validation => 0 });
-my $configure_requires = $meta->effective_prereqs->requirements_for('configure', 'requires')->as_string_hash;
-is_deeply($configure_requires, { 'Module::Build::Tiny' => $mbt_version }, 'configure requires' );
+is($tzil->built_in->file('Build.PL')->slurp, $expected, 'Build.PL declares the correct minimum perl version');
 
 done_testing;
-
 # vim: set ts=4 sw=4 noet nolist :

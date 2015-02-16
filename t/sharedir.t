@@ -51,4 +51,4 @@ use Test::DZil;
 
 done_testing;
 
-# vim: set ts=2 sw=2 noet nolist :
+# vim: set ts=4 sw=4 noet nolist :
