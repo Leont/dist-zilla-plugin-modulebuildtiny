@@ -9,14 +9,39 @@ with qw/
 /;
 
 use Module::Metadata;
+use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
 use List::Util qw/first/;
+use Path::Iterator::Rule;
+
+has version_method => (
+	is      => 'ro',
+	isa     => enum(['installed', 'conservative']),
+	default => 'installed',
+);
 
 has version => (
 	is      => 'ro',
+	lazy    => 1,
 	isa     => StrictVersionStr,
 	default => sub {
-		return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
+		my $self = shift;
+		if ($self->version_method eq 'installed') {
+			return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
+		}
+		elsif (Path::Iterator::Rule->new->file->name('*.PL')->all('lib')) {
+			return '0.039';
+		}
+		elsif (Path::Iterator::Rule->new->file->name('*.xs')->all('lib')) {
+			return '0.036';
+		}
+		elsif (not $self->zilla->name =~ tr/-//) {
+			return '0.019';
+		}
+		elsif (-d 'share') {
+			return '0.014';
+		}
+		return '0';
 	},
 );
 
@@ -36,7 +61,7 @@ use strict;
 use warnings;
 
 use {{ $minimum_perl }};
-use Module::Build::Tiny {{ $version }};
+use Module::Build::Tiny{{ $version ne 0 && " $version" }};
 Build_PL();
 BUILD_PL
 
@@ -112,7 +137,23 @@ This plugin will create a F<Build.PL> for installing the dist using L<Module::Bu
 
 B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
 
-Defaults to the version installed on the author's perl installation
+Defaults to the version determined by C<version_method>.
+
+=attr version_method
+
+This attribute determines how the default minimum perl is detected. It has two possible values:
+
+=over 4
+
+=item * installed
+
+This will give the version installed on the author's perl installation.
+
+=item * conservative
+
+This will return a heuristically determined minimum version of MBT.
+
+=back
 
 =attr minimum_perl
 
