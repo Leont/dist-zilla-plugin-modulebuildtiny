@@ -41,7 +41,7 @@ has version => (
 		elsif (-d 'share') {
 			return '0.014';
 		}
-		return '0';
+		return '0.007';
 	},
 );
 
