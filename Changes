@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.009     2015-02-18 21:19:51+01:00 Europe/Amsterdam
           Implement a conservative minimum mbt heuristic
           Detect minimum perl version from configure, build, test and runtime phases instead of just runtime
 
