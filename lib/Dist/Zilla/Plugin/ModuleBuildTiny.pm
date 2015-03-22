@@ -8,6 +8,7 @@ with qw/
 	Dist::Zilla::Role::FileGatherer
 /;
 
+use Dist::Zilla 4.300039;
 use Module::Metadata;
 use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
