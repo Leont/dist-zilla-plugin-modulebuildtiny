@@ -92,7 +92,7 @@ sub gather_files {
 	require Dist::Zilla::File::InMemory;
 	my $file = Dist::Zilla::File::InMemory->new({
 		name => 'Build.PL',
-		content => $template,	# template evaluated later
+		content => $template,    # template evaluated later
 	});
 
 	$self->add_file($file);
@@ -102,7 +102,7 @@ sub gather_files {
 sub setup_installer {
 	my ($self, $arg) = @_;
 
-	confess "Module::Build::Tiny is currently incompatible with dynamic_config" if $self->zilla->distmeta->{dynamic_config};
+	confess 'Module::Build::Tiny is currently incompatible with dynamic_config' if $self->zilla->distmeta->{dynamic_config};
 
 	for my $map (map { $_->share_dir_map } @{$self->zilla->plugins_with(-ShareDir)}) {
 		$self->log_fatal('Unsupported use of a module sharedir') if exists $map->{module};
@@ -126,6 +126,7 @@ sub setup_installer {
 }
 
 __PACKAGE__->meta->make_immutable;
+no Moose::Util::TypeConstraints;
 no Moose;
 1;
 
@@ -133,11 +134,11 @@ no Moose;
 
 =head1 DESCRIPTION
 
-This plugin will create a F<Build.PL> for installing the dist using L<Module::Build::Tiny>.
+This plugin will create a F<Build.PL> for installing the dist using L<Module::Build::Tiny|Module::Build::Tiny>.
 
 =attr version
 
-B<Optional:> Specify the minimum version of L<Module::Build::Tiny> to depend on.
+B<Optional:> Specify the minimum version of L<Module::Build::Tiny|Module::Build::Tiny> to depend on.
 
 Defaults to the version determined by C<version_method>.
 
