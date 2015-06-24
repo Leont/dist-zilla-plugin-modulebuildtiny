@@ -6,6 +6,7 @@ with qw/
 	Dist::Zilla::Role::TextTemplate
 	Dist::Zilla::Role::PrereqSource
 	Dist::Zilla::Role::FileGatherer
+	Dist::Zilla::Role::MetaProvider
 /;
 
 use Dist::Zilla 4.300039;
@@ -21,6 +22,28 @@ has version_method => (
 	default => 'conservative',
 );
 
+has has_pl => (
+	is      => 'ro',
+	isa     => 'Bool',
+	default => sub {
+		return Path::Iterator::Rule->new->file->name('*.PL')->all('lib');
+	},
+);
+
+has has_xs => (
+	is      => 'ro',
+	isa     => 'Bool',
+	default => sub {
+		return Path::Iterator::Rule->new->file->name('*.xs')->all('lib');
+	},
+);
+
+has static => (
+	is      => 'ro',
+	isa     => enum([qw/no yes auto/]),
+	default => 'no',
+);
+
 has version => (
 	is      => 'ro',
 	lazy    => 1,
@@ -30,10 +53,10 @@ has version => (
 		if ($self->version_method eq 'installed') {
 			return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
 		}
-		elsif (Path::Iterator::Rule->new->file->name('*.PL')->all('lib')) {
+		elsif ($self->has_pl) {
 			return '0.039';
 		}
-		elsif (Path::Iterator::Rule->new->file->name('*.xs')->all('lib')) {
+		elsif ($self->has_xs) {
 			return '0.036';
 		}
 		elsif (not $self->zilla->name =~ tr/-//) {
@@ -74,6 +97,17 @@ sub register_prereqs {
 	$self->zilla->register_prereqs({ phase => 'configure' }, 'Module::Build::Tiny' => $self->version);
 
 	return;
+}
+
+sub can_static {
+	my $self = shift;
+	return !$self->has_pl && !$self->has_xs;
+}
+
+sub metadata {
+	my $self = shift;
+	my $static = $self->static eq 'yes' || $self->static eq 'auto' && $self->can_static;
+	return $static ? { x_static_install => 1 } : ();
 }
 
 sub gather_files {

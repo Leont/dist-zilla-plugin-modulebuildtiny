@@ -2,6 +2,7 @@ Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
           Switch default to conservative version logic
+          Add static install option
 
 0.010     2015-03-27 14:36:24+01:00 Europe/Amsterdam
           Bump a prereq to avoid meta validation issues
