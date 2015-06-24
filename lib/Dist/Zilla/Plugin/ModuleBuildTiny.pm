@@ -18,7 +18,7 @@ use Path::Iterator::Rule;
 has version_method => (
 	is      => 'ro',
 	isa     => enum(['installed', 'conservative']),
-	default => 'installed',
+	default => 'conservative',
 );
 
 has version => (
