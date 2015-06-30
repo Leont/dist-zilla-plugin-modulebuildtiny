@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.011     2015-06-30 17:54:00+02:00 Europe/Amsterdam
           Switch default to conservative version logic
           Add static install option
 
