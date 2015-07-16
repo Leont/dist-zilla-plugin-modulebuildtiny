@@ -13,7 +13,7 @@ use Dist::Zilla 4.300039;
 use Module::Metadata;
 use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
-use List::Util qw/first/;
+use List::Util 1.33 qw/first any/;
 use Path::Iterator::Rule;
 
 has version_method => (
@@ -25,16 +25,20 @@ has version_method => (
 has has_pl => (
 	is      => 'ro',
 	isa     => 'Bool',
+	lazy    => 1,
 	default => sub {
-		return Path::Iterator::Rule->new->file->name('*.PL')->all('lib');
+		my $self = shift;
+		return any { $_->name =~ /^lib\/.*\.PL$/ } @{ $self->zilla->files };
 	},
 );
 
 has has_xs => (
 	is      => 'ro',
 	isa     => 'Bool',
+	lazy    => 1,
 	default => sub {
-		return Path::Iterator::Rule->new->file->name('*.xs')->all('lib');
+		my $self = shift;
+		return any { $_->name =~ /^lib\/.*\.xs$/ } @{ $self->zilla->files };
 	},
 );
 
