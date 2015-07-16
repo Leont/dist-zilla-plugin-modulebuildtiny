@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Also look for .xs, .PL files in files gathered in memory
 
 0.011     2015-06-30 17:54:00+02:00 Europe/Amsterdam
           Switch default to conservative version logic
