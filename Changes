@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.012     2015-07-16 17:00:08+02:00 Europe/Amsterdam
           Also look for .xs, .PL files in files gathered in memory
 
 0.011     2015-06-30 17:54:00+02:00 Europe/Amsterdam
