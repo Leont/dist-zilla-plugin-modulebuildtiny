@@ -2,6 +2,7 @@ Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
           Restored installability on 5.10
+          Added documentation for static install
 
 0.012     2015-07-16 17:00:08+02:00 Europe/Amsterdam
           Also look for .xs, .PL files in files gathered in memory
