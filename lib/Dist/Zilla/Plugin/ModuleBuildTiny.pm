@@ -202,6 +202,32 @@ B<Optional:> Specify the minimum version of perl to require in the F<Build.PL>.
 
 This is normally taken from dzil's prereq metadata.
 
+=attr static
+
+This is an option to set the B<HIGHLY EXPERIMENTAL> C<x_static_install>
+metadata field. B<DO NOT USE THIS OPTION> if you are not involved in its
+testing with the Perl Toolchain Gang.
+
+It has three possible values:
+
+=over 4
+
+=item * no
+
+No extra metadata is added. This is the default setting.
+
+=item * yes
+
+Sets C<x_static_install = 1> in metadata.
+
+=item * auto
+
+Sets C<x_static_install = 1> in metadata if the distribution appears to be
+compatible - presently only the existence of F<.PL> and F<.xs> files are
+checked.
+
+=back
+
 =cut
 
 # vim: set ts=4 sw=4 noet nolist :
