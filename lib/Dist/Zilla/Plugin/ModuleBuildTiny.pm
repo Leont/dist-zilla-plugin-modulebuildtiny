@@ -14,7 +14,6 @@ use Module::Metadata;
 use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
 use List::Util 1.33 qw/first any/;
-use Path::Iterator::Rule;
 
 has version_method => (
 	is      => 'ro',
