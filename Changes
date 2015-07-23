@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.013     2015-07-23 11:58:57+02:00 Europe/Amsterdam
           Restored installability on 5.10
           Added documentation for static install
 
