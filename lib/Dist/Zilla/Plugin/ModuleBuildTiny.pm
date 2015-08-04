@@ -62,13 +62,7 @@ has version => (
 		elsif ($self->has_xs) {
 			return '0.036';
 		}
-		elsif (not $self->zilla->name =~ tr/-//) {
-			return '0.019';
-		}
-		elsif (-d 'share') {
-			return '0.014';
-		}
-		return '0.007';
+		return '0.034'; # _build_params format
 	},
 );
 
