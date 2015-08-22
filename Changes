@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.014     2015-08-22 19:23:20+02:00 Europe/Amsterdam
           Increase minimum MBT in conservative logic
 
 0.013     2015-07-23 11:58:57+02:00 Europe/Amsterdam
