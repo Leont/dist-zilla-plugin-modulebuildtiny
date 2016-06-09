@@ -3,6 +3,7 @@ use strict;
 use warnings FATAL => 'all';
 
 use CPAN::Meta;
+use Path::Tiny;
 use Test::More;
 use Test::DZil;
 use Module::Metadata;
@@ -32,7 +33,7 @@ use Module::Build::Tiny 0.034;
 Build_PL();
 END
 
-is($tzil->built_in->file('Build.PL')->slurp, $expected, 'Build.PL declares the correct minimum perl version');
+is(path($tzil->built_in)->child('Build.PL')->slurp, $expected, 'Build.PL declares the correct minimum perl version');
 
 done_testing;
 # vim: set ts=4 sw=4 noet nolist :
