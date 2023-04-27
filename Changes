@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          - Add header and footer attributes
 
 0.015     2016-06-09 19:28:18+02:00 Europe/Amsterdam
           Adapted to dzil v6
