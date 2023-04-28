@@ -82,6 +82,9 @@ has version => (
 		if ($self->version_method eq 'installed') {
 			return Module::Metadata->new_from_module('Module::Build::Tiny')->version->stringify;
 		}
+		elsif (-e 'include/' or any { $_->name =~ /^src\/.*\.c$/} @{ $self->zilla->files }) {
+			return '0.044';
+		}
 		elsif ($self->has_pl) {
 			return '0.039';
 		}

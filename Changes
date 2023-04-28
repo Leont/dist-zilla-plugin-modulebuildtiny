@@ -2,6 +2,7 @@ Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
           - Add header and footer attributes
+          - Add configure dependency on MBT version 0.044 if include/ or src/
 
 0.015     2016-06-09 19:28:18+02:00 Europe/Amsterdam
           Adapted to dzil v6
