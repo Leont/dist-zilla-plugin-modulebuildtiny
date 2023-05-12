@@ -243,6 +243,12 @@ sub setup_installer {
 		$self->log_fatal('Sharedir location must be share/') if defined $map->{dist} and $map->{dist} ne 'share';
 	}
 
+	for my $file (map { $_->name } @{$self->zilla->find_files(':ExecFiles')})
+	{
+		$self->log_fatal("detected file '$file' that will not be installed as an executable - move it to script/\n")
+			if $file !~ /^script/;
+	}
+
 	my $file = first { $_->name eq 'Build.PL' } @{$self->zilla->files};
 	my $content = $file->content;
 

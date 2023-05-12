@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          Prohibit the use of executables from a directory other than script/
 
 0.017     2023-05-08 18:42:37+02:00 Europe/Amsterdam
           - Include extra newline in Build.PL to facilitate other plugins
