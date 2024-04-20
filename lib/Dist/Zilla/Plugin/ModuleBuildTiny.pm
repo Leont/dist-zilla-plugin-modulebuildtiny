@@ -13,7 +13,7 @@ use Dist::Zilla 4.300039;
 use Module::Metadata;
 use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
-use MooseX::Types::Moose qw(Str ArrayRef HashRef);
+use MooseX::Types::Moose qw/Bool Str ArrayRef HashRef/;
 use List::Util 1.33 qw/first any/;
 
 sub mvp_multivalue_args { qw(header_strs footer_strs) }
@@ -49,7 +49,7 @@ has version_method => (
 
 has has_pl => (
 	is      => 'ro',
-	isa     => 'Bool',
+	isa     => Bool,
 	lazy    => 1,
 	default => sub {
 		my $self = shift;
@@ -59,7 +59,7 @@ has has_pl => (
 
 has has_xs => (
 	is      => 'ro',
-	isa     => 'Bool',
+	isa     => Bool,
 	lazy    => 1,
 	default => sub {
 		my $self = shift;
@@ -108,7 +108,8 @@ has minimum_perl => (
 );
 
 has header_strs => (
-	is => 'ro', isa => ArrayRef[Str],
+	is => 'ro',
+	isa => ArrayRef[Str],
 	traits => ['Array'],
 	lazy => 1,
 	default => sub { [] },
@@ -143,7 +144,8 @@ sub _build_header {
 }
 
 has footer_strs => (
-	is => 'ro', isa => ArrayRef[Str],
+	is => 'ro',
+	isa => ArrayRef[Str],
 	traits => ['Array'],
 	lazy => 1,
 	default => sub { [] },
