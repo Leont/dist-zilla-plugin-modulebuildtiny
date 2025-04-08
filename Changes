@@ -1,6 +1,8 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+
+0.019     2025-04-08 21:43:40+02:00 Europe/Brussels
           - Allow module sharedirs
           - Allow dynamic_config=1
 
