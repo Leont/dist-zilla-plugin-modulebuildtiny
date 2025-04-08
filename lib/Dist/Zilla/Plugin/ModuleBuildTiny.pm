@@ -83,6 +83,9 @@ has version => (
 		elsif (-e 'include/' or any { $_->name =~ /^src\/.*\.c$/} $self->zilla->files->@*) {
 			return '0.044';
 		}
+		elsif (-e 'module-share') {
+			return '0.044';
+		}
 		elsif ($self->has_pl) {
 			return '0.039';
 		}
@@ -234,7 +237,12 @@ sub setup_installer($self) {
 	confess 'Module::Build::Tiny is currently incompatible with dynamic_config' if $self->zilla->distmeta->{dynamic_config};
 
 	for my $map (map { $_->share_dir_map } $self->zilla->plugins_with(-ShareDir)->@*) {
-		$self->log_fatal('Unsupported use of a module sharedir') if exists $map->{module};
+		for my $module (keys $map->{module}->%*) {
+			my $expected = "module-share/$module" =~ s/::/-/gr;
+			if ($map->{module}{$module} ne $expected) {
+				$self->log_fatal("Sharedir location for module $module sharedir should be '$expected'");
+			}
+		}
 		$self->log_fatal('Sharedir location must be share/') if defined $map->{dist} and $map->{dist} ne 'share';
 	}
 

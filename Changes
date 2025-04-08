@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-Plugin-ModuleBuildTiny
 
 {{$NEXT}}
+          - Allow module sharedirs
 
 0.018     2025-04-06 23:28:49+02:00 Europe/Brussels
           - Add a auto_configure_requires option
