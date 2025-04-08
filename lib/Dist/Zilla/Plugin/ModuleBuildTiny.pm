@@ -234,8 +234,6 @@ sub gather_files($self) {
 }
 
 sub setup_installer($self) {
-	confess 'Module::Build::Tiny is currently incompatible with dynamic_config' if $self->zilla->distmeta->{dynamic_config};
-
 	for my $map (map { $_->share_dir_map } $self->zilla->plugins_with(-ShareDir)->@*) {
 		for my $module (keys $map->{module}->%*) {
 			my $expected = "module-share/$module" =~ s/::/-/gr;
