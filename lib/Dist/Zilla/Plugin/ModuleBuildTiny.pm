@@ -11,14 +11,14 @@ with qw/
 	Dist::Zilla::Role::MetaProvider
 /;
 
-use experimental qw/signatures postderef/;
-
 use Dist::Zilla 4.300039;
 use Module::Metadata;
 use Moose::Util::TypeConstraints 'enum';
 use MooseX::Types::Perl qw/StrictVersionStr/;
 use MooseX::Types::Moose qw/Bool Str ArrayRef/;
 use List::Util 1.33 qw/first any/;
+
+use experimental qw/signatures postderef/;
 
 sub mvp_multivalue_args { qw(header_strs footer_strs) }
 
